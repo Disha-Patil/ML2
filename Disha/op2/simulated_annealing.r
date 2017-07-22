@@ -1,0 +1,35 @@
+initial.guess<-c(100,5,0.5,1.0,1.5,2.0,-0.5,-1.0,-2.0,-5,-100)
+MIN<-c()
+for (j in 1:length(initial.guess)){
+
+			x<-initial.guess[j]
+			func<-function(R){(1/R^12) - (1/R^6)}
+			func<-function(x){ (1-x(1))^2 + 100*(x(2)-x(1)^2)^2}
+
+			MIN[j]<-func(x)
+			N<-100000
+			h<-0.05
+			#temp<-c(1000,100,10,0.1)
+			for(i in 1:100)
+			{
+			   temp<-100
+				for(sims in 1:N)
+				{
+					r<-runif(1)
+					   if(r<0.5){x.n<-x-(h*runif(1))}
+					   if(r>=0.5){x.n<-x+(h*runif(1))}
+					   MIN.n<-func(x.n)
+						  if(MIN.n<=MIN[j]){x<-x.n;MIN[j]<-MIN.n}
+						  if(MIN.n>MIN[j]){     if(r<exp(-(func(x.n) - func(x))/temp ) ){x<-x.n}     }
+						
+					temp<-temp*exp(-(func(x.n) - func(x)) )
+				}
+			
+			    
+			}
+}
+
+print(MIN)
+
+
+
