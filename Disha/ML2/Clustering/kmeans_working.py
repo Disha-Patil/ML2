@@ -119,10 +119,21 @@ def move_centroids(points, closest, centroids):
 
 move_centroids(iri, closest_centroid(iri, c), c)
 
+def within_cluster(points, centroids):
+    """returns an array containing the index to the nearest centroid for each point"""
+    dist = np.sqrt(((points - centroids[:, np.newaxis])**2).sum(axis=2))
+    total_dist=np.sum(dist[0])+np.sum(dist[1])+np.sum(dist[2])
+    return total_dist
 
+total_dist=[]
+total_dist.append(within_cluster(iri,c))
+e=0.01
 for i in range(0,100):
     closest = closest_centroid(iri, c)
     centroids = move_centroids(iri, closest, c)
+    total_dist.append(within_cluster(iri,centroids))
+    if total_dist[i+1]-total_dist[i] < e:
+        break
     
 
 
