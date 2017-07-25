@@ -89,7 +89,7 @@ def initialize_centroids(points, k):
     return centroids[:k]
 
 iri=np.array(irisdf)
-initialize_centroids(iri, 3)
+c=initialize_centroids(iri, 3)
 
 def closest_centroid(points, centroids):
     """returns an array containing the index to the nearest centroid for each point"""
@@ -120,9 +120,9 @@ def move_centroids(points, closest, centroids):
 move_centroids(iri, closest_centroid(iri, c), c)
 
 
-for i in range(0,10):
-    closest = closest_centroid(points, centroids)
-    centroids = move_centroids(points, closest, centroids)
+for i in range(0,100):
+    closest = closest_centroid(iri, c)
+    centroids = move_centroids(iri, closest, c)
     
 
 
